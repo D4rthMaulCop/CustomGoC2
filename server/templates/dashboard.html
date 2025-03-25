@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Agent Dashboard</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+    table { width: 100%; border-collapse: collapse; background: #fff; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+    th { background-color: #eee; }
+    .offline { background-color: #fdd; }
+  </style>
+  <script>
+    function updateTimers() {
+      const now = new Date();
+      document.querySelectorAll('[data-lastseen]').forEach(el => {
+        const lastSeen = new Date(el.dataset.lastseen);
+        const secondsAgo = Math.floor((now - lastSeen) / 1000);
+        el.textContent = secondsAgo + 's ago';
+        if (secondsAgo > 30) el.parentElement.classList.add('offline');
+        else el.parentElement.classList.remove('offline');
+      });
+    }
+    setInterval(updateTimers, 1000);
+    window.onload = updateTimers;
+  </script>
+</head>
+<body>
+  <h1>Agent Dashboard</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Status</th>
+        <th>Last Check In</th>
+        <th>Agent ID</th>
+        <th>Hostname</th>
+        <th>Username</th>
+        <th>OS</th>
+        <th>Last Seen (UTC)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ range $id, $agent := . }}
+      <tr>
+        <td class="status">{{ if $agent }}Online{{ else }}Offline{{ end }}</td>
+        <td><span data-lastseen="{{ $agent.LastSeen }}">...</span></td>
+        <td><a href="/agent/{{ $id }}">{{ $id }}</a></td>
+        <td>{{ index $agent.SystemInfo "hostname" }}</td>
+        <td>{{ index $agent.SystemInfo "username" }}</td>
+        <td>{{ index $agent.SystemInfo "os" }}</td>
+        <td>{{ $agent.LastSeen }}</td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Agent {{ . }}</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+    textarea { width: 100%; height: 300px; margin-top: 10px; }
+    input[type=text] { width: 80%; padding: 5px; }
+    button { padding: 5px 10px; }
+    a { text-decoration: none; margin-bottom: 20px; display: inline-block; }
+  </style>
+</head>
+<body>
+  <a href="/">&larr; Back to Dashboard</a>
+  <h1>Agent: {{ . }}</h1>
+
+  <div>
+    <label>Command:</label>
+    <input type="text" id="command">
+    <button onclick="sendCommand()">Send</button>
+  </div>
+
+  <h3>Output:</h3>
+  <textarea id="output" readonly></textarea>
+
+  <script>
+    const agentID = "{{ . }}";
+
+    function fetchOutput() {
+      fetch(`/get_output/${agentID}`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("output").value = data.join("\n---\n");
+        });
+    }
+
+    function sendCommand() {
+      const cmd = document.getElementById("command").value;
+      fetch(`/task/${agentID}`, {
+        method: "POST",
+        body: cmd
+      }).then(() => {
+        document.getElementById("command").value = "";
+        setTimeout(fetchOutput, 2000);
+      });
+    }
+
+    setInterval(fetchOutput, 5000);
+    fetchOutput();
+  </script>
+</body>
+</html>
