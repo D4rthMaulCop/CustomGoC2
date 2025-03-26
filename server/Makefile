@@ -1,5 +1,5 @@
 APP_NAME = c2server
-BUILD_DIR = bin
+BUILD_DIR = .
 
 .PHONY: all build run clean
 
