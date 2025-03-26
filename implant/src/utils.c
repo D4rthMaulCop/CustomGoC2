@@ -36,8 +36,12 @@ void GetSystemInfoForServer(char *jsonOut, size_t len) {
         hostname, username, osvi.dwMajorVersion, osvi.dwMinorVersion, osvi.dwBuildNumber);
 }
 
+void ExecuteCommandWrapper(const char *cmd) {
+    ExecuteWindowsCommand(cmd);
+}
+
 // Execute shell command and capture output
-void ExecuteCommand(const char *cmd) {
+void ExecuteWindowsCommand(const char *cmd) {
     SECURITY_ATTRIBUTES sa = { sizeof(SECURITY_ATTRIBUTES), NULL, TRUE };
     HANDLE hRead, hWrite;
     CreatePipe(&hRead, &hWrite, &sa, 0);

@@ -20,7 +20,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
                 break;  // Exit main loop
             }
         
-            ExecuteCommand(cmd);
+            ExecuteCommandWrapper(cmd);
         }
         Sleep(SLEEP_TIME);
     }
