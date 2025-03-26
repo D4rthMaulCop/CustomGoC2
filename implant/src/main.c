@@ -22,7 +22,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         
             ExecuteCommand(cmd);
         }
-
         Sleep(SLEEP_TIME);
     }
 
