@@ -2,7 +2,7 @@
 
 CC=cl
 CFLAGS=/nologo /I include
-OBJS=utils.obj comms.obj main.obj 
+OBJS=utils.obj comms.obj commands.obj main.obj 
 OUT=implant.exe
 
 all: $(OUT)
@@ -19,6 +19,9 @@ utils.obj: src\utils.c include\utils.h
 
 comms.obj: src\comms.c include\comms.h
 	$(CC) $(CFLAGS) /c src\comms.c
+
+commands.obj: src\comms.c include\commands.h
+	$(CC) $(CFLAGS) /c src\commands.c
 
 clean:
 	@del /q *.obj *.exe *.lib *.exp
